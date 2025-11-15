@@ -6,12 +6,11 @@
 set debian_base_dir debian
 set os Debian
 set os_arch amd64
-set space "  "
 
 :custom
 clear debian_version
 menu Debian Network Installer
-item trixie   ${space} Debian 13.0 (trixie)
+item trixie Debian 13.0 (trixie)
 choose debian_version || goto exit
 
 isset debian_mirror || set debian_mirror http://deb.debian.org/debian
