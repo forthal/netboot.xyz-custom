@@ -8,13 +8,15 @@ set debian_base_dir debian
 set os Debian
 set os_arch amd64
 set debian_version trixie
+
 set mirrorcfg mirror/suite=${debian_version}
 set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${os_arch}/current/images/netboot/${debian_base_dir}-installer/${os_arch}
-set custom_params "netcfg/enable=true netcfg/get_hostname?=unassigned netcfg/get_domain?=unassigned hw-detect/load_firmware=false hw-detect/firmware-lookup=never"
+
+set custom_params netcfg/enable=true netcfg/get_hostname?=unassigned netcfg/get_domain?=unassigned hw-detect/load_firmware=false hw-detect/firmware-lookup=never
 set preseed_url tftp://router.lan/preseed.cfg
 set install_params auto=true priority=critical ${custom_params} preseed/url=${preseedurl}
 
-echo Installing ${os} ${debian_version} with ${install_params} 
+echo -n Installing ${os} ${debian_version} with ${install_params} 
 
 imgfree
 kernel ${debian_mirror}/${dir}/linux ${install_params} ${mirrorcfg} initrd=initrd.magic ${cmdline}
