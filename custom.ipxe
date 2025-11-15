@@ -14,7 +14,7 @@ set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${os_arch}/cur
 
 set custom_params netcfg/enable=true netcfg/get_hostname?=unassigned netcfg/get_domain?=unassigned hw-detect/load_firmware=false hw-detect/firmware-lookup=never
 set preseed_url tftp://router.lan/preseed.cfg
-set install_params auto=true priority=critical ${custom_params} preseed/url=${preseedurl}
+set install_params auto=true priority=critical ${custom_params} preseed/url=${preseed_url}
 
 echo Installing ${os} ${debian_version} with ${install_params} 
 echo
