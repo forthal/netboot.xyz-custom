@@ -16,7 +16,8 @@ set custom_params netcfg/enable=true netcfg/get_hostname?=unassigned netcfg/get_
 set preseed_url tftp://router.lan/preseed.cfg
 set install_params auto=true priority=critical ${custom_params} preseed/url=${preseedurl}
 
-echo -n Installing ${os} ${debian_version} with ${install_params} 
+echo Installing ${os} ${debian_version} with ${install_params} 
+echo
 
 imgfree
 kernel ${debian_mirror}/${dir}/linux ${install_params} ${mirrorcfg} initrd=initrd.magic ${cmdline}
