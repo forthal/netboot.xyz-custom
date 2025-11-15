@@ -1,32 +1,27 @@
 #!ipxe
 ###
-### Simplified Debian Installer with Preseed URL
+### Simplified Debian Trixie Installer with Preseed URL
 ###
 
+set debian_mirror http://deb.debian.org
 set debian_base_dir debian
 set os Debian
 set os_arch amd64
-
-:custom
-clear debian_version
-menu Debian Network Installer
-item trixie Debian 13.0 (trixie)
-choose debian_version || goto exit
-
-isset debian_mirror || set debian_mirror http://deb.debian.org/debian
-set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${os_arch}/current/images/netboot/
-
+set debian_version trixie
+set mirrorcfg mirror/suite=${debian_version}
+set dir ${debian_base_dir}/dists/${debian_version}/main/installer-${os_arch}/current/images/netboot/${debian_base_dir}-installer/${os_arch}
 set custom_params "netcfg/enable=true netcfg/get_hostname?=unassigned netcfg/get_domain?=unassigned hw-detect/load_firmware=false hw-detect/firmware-lookup=never"
-
-:preseed
-echo -n Enter preseed URL for ${os} ${debian_version}: ${}
-read preseedurl
-
+set preseed_url tftp://router.lan/preseed.cfg
 set install_params auto=true priority=critical ${custom_params} preseed/url=${preseedurl}
 
+echo Installing ${os} ${debian_version} with ${install_params} 
+
 imgfree
-kernel ${debian_mirror}/${dir}/linux ${install_params} initrd=initrd.gz
+kernel ${debian_mirror}/${dir}/linux ${install_params} ${mirrorcfg} initrd=initrd.magic ${cmdline}
 initrd ${debian_mirror}/${dir}/initrd.gz
+echo
+echo MD5sums:
+md5sum linux initrd.gz
 boot
 
 :exit
